@@ -1,7 +1,20 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
+import { useState } from 'react';
 
 export default function Home() {
+  const [data, setData] = useState({});
+  const handleClick = async () => {
+    const data = await fetch('/api/create_user', {
+      method: "POST",
+      body: JSON.stringify({
+        firstName: "John",
+        lastName: "Barhorst"
+      })
+    });
+    const res = await data.json();
+    setData(res);
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -15,8 +28,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          <button onClick={() => handleClick()}>Click</button>
         </p>
 
         <div className={styles.grid}>
